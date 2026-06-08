@@ -1,0 +1,17 @@
+body {
+  padding-bottom: 2rem;
+}
+
+.navbar-brand img {
+  max-height: 64px;
+  margin-right: 1rem;
+}
+
+.card-img-top {
+  height: 165px;
+  object-fit: cover;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}

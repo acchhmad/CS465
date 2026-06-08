@@ -1,6 +1,5 @@
 var createError = require('http-errors');
 var express = require('express');
-require('./app_server/models/db');
 require('./app_api/models/db');
 var path = require('path');
 var hbs = require('hbs');
@@ -25,6 +24,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Allow the Angular admin SPA (localhost:4200) to call the Express API.
+app.use('/api', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  next();
+});
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
